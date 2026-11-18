@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Utkarsh Mahale – Backend and LLM Engineer</title>
+<meta name="description" content="Portfolio of Utkarsh Mahale: LLM search, RAG, agents and backend systems built with Python, FastAPI, PostgreSQL and Neo4j.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F0;--surface:#E8ECE6;--ink:#14202B;--muted:#56626E;--line:#CBD3CC;
+  --accent:#2438D6;--accent-ink:#FFFFFF;--warm:#B8650B;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0E1520;--surface:#162130;--ink:#E6ECF2;--muted:#9AA7B4;--line:#26344A;--accent:#8FA2FF;--accent-ink:#0E1520;--warm:#F0A64B;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0E1520;--surface:#162130;--ink:#E6ECF2;--muted:#9AA7B4;--line:#26344A;--accent:#8FA2FF;--accent-ink:#0E1520;--warm:#F0A64B;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:56px}
+nav .brand{font:800 18px var(--display);text-decoration:none;margin-right:auto}
+nav a.l{text-decoration:none;color:var(--muted);font-size:15px}
+nav a.l:hover{color:var(--ink)}
+.tbtn{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 14px;font:500 14px var(--body);cursor:pointer}
+.tbtn:hover{border-color:var(--accent)}
+@media(max-width:640px){nav a.l{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#graph{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;padding-top:88px;padding-bottom:96px;pointer-events:none}
+.hero .wrap>*{pointer-events:auto}
+.hero h1{font:800 clamp(44px,8vw,92px)/0.98 var(--display);letter-spacing:-0.03em;margin:0 0 24px;max-width:11em}
+.hero p.lead{font-size:clamp(18px,2.2vw,22px);max-width:34em;margin:0 0 12px}
+.hero p.sub{color:var(--muted);max-width:34em;margin:0 0 32px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 22px;border-radius:8px;font:500 16px var(--body);text-decoration:none;border:1px solid var(--ink);cursor:pointer;background:transparent;color:var(--ink)}
+.btn.p{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:hover{transform:translateY(-1px)}
+.hint{position:relative;z-index:1;color:var(--muted);font-size:14px;padding:0 24px 16px;max-width:1080px;margin:0 auto}
+
+/* sections */
+section{padding:72px 0;border-bottom:1px solid var(--line)}
+h2{font:800 clamp(30px,4vw,44px)/1.1 var(--display);letter-spacing:-0.02em;margin:0 0 36px}
+.proj{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px 48px;padding:32px 0;border-top:1px solid var(--line)}
+.proj:first-of-type{border-top:0;padding-top:0}
+.proj h3{font:600 24px/1.2 var(--display);margin:0 0 8px}
+.meta{color:var(--muted);font-size:15px;margin:0}
+.badge{display:inline-block;font-size:13px;border:1px solid var(--warm);color:var(--warm);border-radius:999px;padding:1px 10px;margin-top:10px}
+.problem{font-size:19px;margin:0 0 16px;max-width:36em}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;margin:0 0 16px;padding:0;list-style:none}
+.flow li{font:400 13px var(--mono);background:var(--surface);border:1px solid var(--line);padding:4px 10px;border-radius:6px}
+.flow li+li{margin-left:22px;position:relative}
+.flow li+li::before{content:"";position:absolute;left:-18px;top:50%;width:14px;border-top:2px solid var(--accent)}
+.proj ul.pts{margin:0 0 14px;padding-left:20px;max-width:38em}
+.proj ul.pts li{margin-bottom:6px}
+.stack{color:var(--muted);font-size:15px;margin:0}
+.proj a.ln{color:var(--accent);font-weight:500}
+@media(max-width:760px){.proj{grid-template-columns:1fr}}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px 40px}
+.skills h3{font:600 19px var(--display);margin:0 0 8px}
+.skills p{margin:0;color:var(--muted);font-size:16px}
+.edu{display:grid;gap:18px;max-width:40em}
+.edu b{font-weight:500}
+.edu span{color:var(--muted);display:block;font-size:15px}
+.contact{border-bottom:0}
+.mail{font:800 clamp(24px,5vw,48px)/1.1 var(--display);letter-spacing:-0.02em;word-break:break-all;margin:0 0 24px}
+.links{display:flex;flex-wrap:wrap;gap:12px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#top">Utkarsh Mahale</a>
+  <a class="l" href="#projects">Projects</a><a class="l" href="#skills">Skills</a><a class="l" href="#education">Education</a><a class="l" href="#contact">Contact</a>
+  <button class="tbtn" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
+</div></nav>
+
+<header class="hero" id="top">
+  <canvas id="graph" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h1>I build backend systems and LLM search tools.</h1>
+    <p class="lead">Second-year B.Tech student in AI and Data Science at VIT Pune. I work with Python, FastAPI, PostgreSQL and Neo4j, and I like problems where data, search and language models have to work together.</p>
+    <p class="sub">Open to SDE internships.</p>
+    <div class="cta">
+      <a class="btn p" href="#projects">See my projects</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+  <p class="hint">The graph behind this page links the tools to the projects I used them in. Move your cursor over a node to see its connections.</p>
+</header>
+
+<main>
+<section id="projects"><div class="wrap">
+  <h2>Projects</h2>
+
+  <article class="proj">
+    <div><h3>AI Job Matching and Search Engine</h3><p class="meta">Search and recommendation</p></div>
+    <div>
+      <p class="problem">Keyword search misses skills and context, so job seekers see listings that do not fit them.</p>
+      <ul class="flow" aria-label="Pipeline"><li>Resume and job post</li><li>LLM parse to JSON</li><li>Embeddings in pgvector</li><li>BM25 + vector search</li><li>Re-rank</li><li>Match explanation</li></ul>
+      <ul class="pts"><li>Parsed resumes and job postings into structured JSON with an LLM.</li><li>Built hybrid retrieval that combines keyword and vector search, then re-ranks the results.</li><li>Added an LLM-written explanation of why each job matches.</li></ul>
+      <p class="stack">Python, FastAPI, PostgreSQL, pgvector, OpenAI Embeddings, Docker</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>RAG Assistant with Evaluation Harness</h3><p class="meta">Retrieval and LLM evals</p></div>
+    <div>
+      <p class="problem">LLM answers about companies, roles and documents can invent facts unless they are grounded in sources.</p>
+      <ul class="flow" aria-label="Pipeline"><li>Documents</li><li>Chunk</li><li>Embed</li><li>Retrieve</li><li>Answer with citations</li><li>Score on golden set</li></ul>
+      <ul class="pts"><li>Built ingestion, chunking and retrieval that returns answers with citations.</li><li>Wrote a golden question set and automated checks for faithfulness and answer relevance, used to compare chunk sizes and models.</li></ul>
+      <p class="stack">Python, FastAPI, pgvector, RAGAS, LLM-as-judge</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>Tool-Using LLM Job Agent</h3><p class="meta">Agents and structured outputs</p></div>
+    <div>
+      <p class="problem">Tracking jobs and drafting applications by hand is scattered and easy to get wrong.</p>
+      <ul class="flow" aria-label="Pipeline"><li>User request</li><li>LLM picks a tool</li><li>Pydantic validates</li><li>search_jobs / save_job / draft_email</li><li>Postgres</li></ul>
+      <ul class="pts"><li>Built an agent whose tool calls are checked against a JSON schema, with retries and fallbacks when the model returns malformed output.</li></ul>
+      <p class="stack">Python, FastAPI, PostgreSQL, Pydantic, Docker</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>CodeNebula</h3><p class="meta">C# code analysis and knowledge graph</p></div>
+    <div>
+      <p class="problem">Large C# codebases are hard to understand because source code is not something you can query.</p>
+      <ul class="flow" aria-label="Pipeline"><li>C# source</li><li>ANTLR4 parse</li><li>Entities and relations</li><li>Neo4j graph</li><li>Local LLM descriptions</li></ul>
+      <ul class="pts"><li>Led development of the platform, including the ETL pipeline and FastAPI endpoints.</li><li>Used local models (Ollama, DeepSeek Coder) to add generated descriptions to parsed code.</li></ul>
+      <p class="stack">Python, FastAPI, ANTLR4, Neo4j, Ollama, DeepSeek Coder</p>
+      <p class="stack"><a class="ln" href="https://github.com/sanskar-dalvi/Code-Nebula">View the code on GitHub</a></p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>FairSell</h3><p class="meta">Multi-channel inventory and overselling prevention</p><span class="badge">In progress</span></div>
+    <div>
+      <p class="problem">When one product is sold on several channels, simultaneous orders can sell stock that no longer exists.</p>
+      <ul class="flow" aria-label="Checkout transaction"><li>Begin transaction</li><li>SELECT ... FOR UPDATE</li><li>Conditional stock update</li><li>Commit</li></ul>
+      <ul class="pts"><li>Implemented concurrency-safe checkout with row-level locking in InnoDB.</li><li>Designed a 13-table schema with JWT and scrypt authentication and ADMIN, SELLER and STAFF roles.</li><li>Tested with isolated concurrency runs and a sandbox channel simulator. A research paper on the system is in progress.</li></ul>
+      <p class="stack">Python, FastAPI, MySQL 8, InnoDB</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>AI Multilingual Voice Agent</h3><p class="meta">Speech and language</p><span class="badge">In progress</span></div>
+    <div>
+      <p class="problem">A voice assistant that understands and answers in English, Hindi and Marathi.</p>
+      <ul class="pts"><li>Integrating speech recognition, real-time transcription and language-aware spoken replies.</li></ul>
+      <p class="stack">Python, AssemblyAI, Speech Recognition, TTS</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <div><h3>Curriculum Management System</h3><p class="meta">Role-based web platform</p><span class="badge">In progress</span></div>
+    <div>
+      <p class="problem">Programme planning and course approval that moves between CDC, HOD and faculty roles.</p>
+      <ul class="pts"><li>Building programme management, course approval and faculty assignment.</li></ul>
+      <p class="stack">PHP, Laravel, MySQL</p>
+      <p class="stack"><a class="ln" href="https://github.com/utkarshmahale06/curriculum-develop">View the code on GitHub</a></p>
+    </div>
+  </article>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <h2>What I work with</h2>
+  <div class="skills">
+    <div><h3>Search and recommenders</h3><p>Embeddings, pgvector, FAISS, hybrid search with BM25, re-ranking, cosine similarity, and ranking metrics such as Precision@K, NDCG and MRR.</p></div>
+    <div><h3>RAG and LLM evals</h3><p>Chunking, retrieval, citations, golden datasets, LLM-as-judge, hallucination checks and RAGAS.</p></div>
+    <div><h3>LLM engineering</h3><p>Prompting and prompt versions, tool calling, JSON-schema outputs, Pydantic validation, retries, fallbacks and guardrails. Local models through Ollama.</p></div>
+    <div><h3>Backend and databases</h3><p>FastAPI, REST APIs, JWT auth, role-based access, Laravel. PostgreSQL, MySQL and Neo4j, with schema design, indexes, transactions and Redis caching.</p></div>
+    <div><h3>Deployment</h3><p>Docker, Docker Compose, GitHub Actions, cloud deploys, logging, Git and GitHub.</p></div>
+    <div><h3>Languages</h3><p>Python, SQL, Java, C, C++, PHP and JavaScript, with a base in data structures, algorithms and OOP.</p></div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <h2>Education</h2>
+  <div class="edu">
+    <div><b>B.Tech, Artificial Intelligence and Data Science</b><span>Vishwakarma Institute of Technology, Pune, 2026 to 2029 (second year)</span></div>
+    <div><b>Diploma in Computer Engineering, 94.78%</b><span>Government Polytechnic, Nashik, 2026</span></div>
+    <div><b>Certifications</b><span>Google Prompting Essentials and Google AI Essentials (Coursera), GenAI Data Analytics and Data Visualisation job simulations (Forage), AI Readiness (IICT)</span></div>
+  </div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <h2>Let’s talk</h2>
+  <p class="mail" id="mailtext">utkarshmahale06@gmail.com</p>
+  <div class="links">
+    <button class="btn p" id="copy" type="button">Copy email address</button>
+    <a class="btn" href="mailto:utkarshmahale06@gmail.com">Write an email</a>
+    <a class="btn" href="https://www.linkedin.com/in/utkarsh-mahale-246bb0348/">LinkedIn</a>
+    <a class="btn" href="https://github.com/utkarshmahale06">GitHub</a>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap">Utkarsh Mahale, Pune, India</div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  try{var s=localStorage.getItem("theme");if(s==="light"||s==="dark")root.setAttribute("data-theme",s);}catch(e){}
+  function isDark(){var t=root.getAttribute("data-theme");return t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;}
+  document.getElementById("theme").addEventListener("click",function(){
+    var n=isDark()?"light":"dark";root.setAttribute("data-theme",n);
+    try{localStorage.setItem("theme",n);}catch(e){}
+    readColors();draw();
+  });
+  var cb=document.getElementById("copy");
+  cb.addEventListener("click",function(){
+    var m="utkarshmahale06@gmail.com";
+    function ok(){cb.textContent="Copied";setTimeout(function(){cb.textContent="Copy email address";},1800);}
+    try{navigator.clipboard.writeText(m).then(ok,function(){cb.textContent="Copy failed, use the address above";});}
+    catch(e){cb.textContent="Copy failed, use the address above";}
+  });
+
+  /* knowledge graph: tools linked to the projects they were used in */
+  var cv=document.getElementById("graph"),cx=cv.getContext("2d"),W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2);
+  var projects={
+    "Job matching":["Python","FastAPI","PostgreSQL","pgvector","Embeddings","Docker"],
+    "RAG assistant":["Python","FastAPI","pgvector","Embeddings","RAGAS"],
+    "Job agent":["Python","FastAPI","PostgreSQL","Pydantic","Docker"],
+    "CodeNebula":["Python","FastAPI","ANTLR4","Neo4j","Ollama"],
+    "FairSell":["Python","FastAPI","MySQL"],
+    "Voice agent":["Python","AssemblyAI"],
+    "Curriculum":["Laravel","MySQL"]
+  };
+  var nodes=[],idx={},edges=[];
+  function add(n,type){if(idx[n]===undefined){idx[n]=nodes.length;nodes.push({n:n,t:type,x:Math.random(),y:Math.random(),vx:0,vy:0});}return idx[n];}
+  Object.keys(projects).forEach(function(p){var a=add(p,"p");projects[p].forEach(function(k){edges.push([a,add(k,"k")]);});});
+  var C={};
+  function readColors(){var st=getComputedStyle(root);C.ink=st.getPropertyValue("--ink").trim();C.muted=st.getPropertyValue("--muted").trim();C.line=st.getPropertyValue("--line").trim();C.accent=st.getPropertyValue("--accent").trim();C.warm=st.getPropertyValue("--warm").trim();}
+  var hover=-1,reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches,mx=-1,my=-1;
+  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);}
+  function place(){nodes.forEach(function(o){o.x=W*(0.45+0.5*Math.random());o.y=H*(0.1+0.8*Math.random());});}
+  function step(){
+    var i,j,a,b,dx,dy,d,f;
+    for(i=0;i<nodes.length;i++){a=nodes[i];
+      for(j=i+1;j<nodes.length;j++){b=nodes[j];dx=a.x-b.x;dy=a.y-b.y;d=Math.sqrt(dx*dx+dy*dy)+0.1;
+        if(d<150){f=(150-d)*0.0009;a.vx+=dx/d*f*10;a.vy+=dy/d*f*10;b.vx-=dx/d*f*10;b.vy-=dy/d*f*10;}}
+      a.vx+=(W*0.7-a.x)*0.00004;a.vy+=(H*0.5-a.y)*0.00006;
+      a.vx+=(Math.random()-0.5)*0.03;a.vy+=(Math.random()-0.5)*0.03;}
+    edges.forEach(function(e){a=nodes[e[0]];b=nodes[e[1]];dx=b.x-a.x;dy=b.y-a.y;d=Math.sqrt(dx*dx+dy*dy)+0.1;f=(d-110)*0.0006;
+      a.vx+=dx/d*f*10;a.vy+=dy/d*f*10;b.vx-=dx/d*f*10;b.vy-=dy/d*f*10;});
+    nodes.forEach(function(o){o.vx*=0.92;o.vy*=0.92;o.x+=o.vx;o.y+=o.vy;
+      if(o.x<20)o.vx+=0.2;if(o.x>W-20)o.vx-=0.2;if(o.y<20)o.vy+=0.2;if(o.y>H-20)o.vy-=0.2;});
+  }
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    var on={};if(hover>=0){on[hover]=1;edges.forEach(function(e){if(e[0]===hover)on[e[1]]=1;if(e[1]===hover)on[e[0]]=1;});}
+    cx.lineWidth=1;
+    edges.forEach(function(e){var a=nodes[e[0]],b=nodes[e[1]],hot=hover>=0&&(e[0]===hover||e[1]===hover);
+      cx.globalAlpha=hover<0?0.5:(hot?0.95:0.12);cx.strokeStyle=hot?C.accent:C.line;cx.lineWidth=hot?2:1;
+      cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();});
+    cx.font="500 13px "+getComputedStyle(document.body).fontFamily;cx.textBaseline="middle";
+    nodes.forEach(function(o,i){
+      var lit=hover<0||on[i];cx.globalAlpha=lit?1:0.25;
+      cx.fillStyle=o.t==="p"?C.warm:C.accent;cx.beginPath();cx.arc(o.x,o.y,o.t==="p"?7:4.5,0,6.283);cx.fill();
+      cx.fillStyle=o.t==="p"?C.ink:C.muted;cx.fillText(o.n,o.x+11,o.y);});
+    cx.globalAlpha=1;
+  }
+  function loop(){step();draw();requestAnimationFrame(loop);}
+  function pick(x,y){hover=-1;var best=22;nodes.forEach(function(o,i){var d=Math.hypot(o.x-x,o.y-y);if(d<best){best=d;hover=i;}});}
+  cv.parentNode.addEventListener("mousemove",function(e){var r=cv.getBoundingClientRect();pick(e.clientX-r.left,e.clientY-r.top);if(reduce)draw();});
+  cv.parentNode.addEventListener("mouseleave",function(){hover=-1;if(reduce)draw();});
+  window.addEventListener("resize",function(){size();if(reduce){draw();}});
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){readColors();draw();});
+  size();place();readColors();
+  if(reduce){for(var k=0;k<300;k++)step();draw();}else{for(var k2=0;k2<120;k2++)step();loop();}
+})();
+</script>
+</body>
+</html>
